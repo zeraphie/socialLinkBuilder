@@ -36,20 +36,23 @@ $(document).ready(function(){
 });
 ```
 
-### Adding email and telephone links
-Email and Telephone links are disabled by default, but if you would like to use them,
+### Extra Links
+Email, Telephone and Print links are disabled by default, but if you would like to use them,
 set the isUsed property to true AND add the mailto and/or tel properties respectively
 as shown below.
 ```javascript
 $(document).ready(function(){
     $('.social').socialLinkBuilder({
+        print: {
+            isUsed: true
+        },
         email: {
-          isUsed: true,
-          mailto: 'example@example.example'
+            isUsed: true,
+            mailto: 'example@example.example'
         },
         tel: {
-          isUsed: true,
-          tel: '0123456789'
+            isUsed: true,
+            tel: '0123456789'
         }
     });
 });
