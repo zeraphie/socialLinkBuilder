@@ -8,16 +8,65 @@ bower install social-link-builder
 ```
 
 ## Usage
+
+### Default
+Adds all of the social icons, without email and telephone.
+```javascript
+$(document).ready(function(){
+    $('.social').socialLinkBuilder();
+});
+```
+
+### Removing an icon
+Currently all the supported social medias are:
+* facebook - Facebook
+* twitter  - Twitter
+* linkedin - LinkedIn
+* gplus    - Google Plus
+
+To remove the icon, use the label for the social media and set the isUsed
+property to false as below.
 ```javascript
 $(document).ready(function(){
     $('.social').socialLinkBuilder({
-        url: win.location.href,
-        title: 'The title of the page', // Defaults to first h1 on the page
-        text: 'Just some text to add to the tweet', // Defaults to excerpt of first paragraph on the page
-        fb: true, // Facebook
-        tw: true, // Twitter
-        li: true, // LinkedIn
-        gp: true  // Google Plus
+        facebook: {
+            isUsed: false
+        }
+    });
+});
+```
+
+### Adding email and telephone links
+Email and Telephone links are disabled by default, but if you would like to use them,
+set the isUsed property to true AND add the mailto and/or tel properties respectively
+as shown below.
+```javascript
+$(document).ready(function(){
+    $('.social').socialLinkBuilder({
+        email: {
+          isUsed: true,
+          mailto: 'example@example.example'
+        },
+        tel: {
+          isUsed: true,
+          tel: '0123456789'
+        }
+    });
+});
+```
+
+### The svg property
+All the media services as well as the email and telephone links have an svg property
+which is appended to the link. This means that you can override the svg with a custom
+svg or some text if you'd like.
+
+Note: This **cannot** be empty if you want to override it, it will default to the svg
+```javascript
+$(document).ready(function(){
+    $('.social').socialLinkBuilder({
+        facebook: {
+            svg: 'Custom Text'
+        }
     });
 });
 ```
