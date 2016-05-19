@@ -1,6 +1,12 @@
 # socialLinkBuilder
 A jQuery Plugin that builds the social links for you
 
+## Install
+Install with [bower](http://bower.io/#install-bower)
+```bash
+bower install social-link-builder
+```
+
 ## Usage
 ```javascript
 $(document).ready(function(){
