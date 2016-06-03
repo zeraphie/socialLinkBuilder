@@ -1,6 +1,9 @@
 # socialLinkBuilder
 A jQuery Plugin that builds the social links for you
 
+## Demo
+A small demo with minimalistic styles can be accessed here: http://codepen.io/zephyr/pen/RRPpJy
+
 ## Install
 Install with [bower](http://bower.io/#install-bower)
 ```bash
