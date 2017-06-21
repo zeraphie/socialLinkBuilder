@@ -1,5 +1,5 @@
 /*!
- * SocialLinksBuilder v1.0.1
+ * SocialLinksBuilder v1.1.2
  * A jQuery Plugin that builds the social links for you
  * also includes an email and telephone link
  *
