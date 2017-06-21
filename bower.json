@@ -1,6 +1,6 @@
 {
   "name": "social-link-builder",
-  "authors": "Tony Lopez",
+  "authors": "Izzy Skye",
   "description": "A jQuery Plugin that builds the social links for you",
   "keywords": [
     "social",
@@ -16,5 +16,5 @@
   "dependencies": {
     "jquery": "^2.2.3"
   },
-  "homepage": "https://github.com/lopeax/socialLinkBuilder"
+  "homepage": "https://github.com/zeraphie/socialLinkBuilder"
 }
