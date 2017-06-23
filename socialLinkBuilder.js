@@ -1,5 +1,5 @@
 /*!
- * SocialLinksBuilder v1.1.2
+ * SocialLinksBuilder v1.2.0
  * A jQuery Plugin that builds the social links for you
  * also includes an email and telephone link
  *
@@ -45,7 +45,7 @@
             }
         }
 
-        opts = $.extend({
+        opts = $.extend(true, {
             url: win.location.href,
             title: bod.find('h1').filter(function(){
                 return ($.trim($(this).text()).length);
@@ -54,31 +54,39 @@
                 return ($.trim($(this).text()).length);
             }).first().text()) || '',
             facebook: {
-                isUsed: true
+                isUsed: true,
+                order: 0
             },
             twitter: {
-                isUsed: true
+                isUsed: true,
+                order: 10
             },
             linkedin: {
-                isUsed: true
+                isUsed: true,
+                order: 20
             },
             gplus: {
-                isUsed: true
+                isUsed: true,
+                order: 30
             },
             print: {
-                isUsed: false
+                isUsed: false,
+                order: 40
             },
             email: {
                 isUsed: false,
+                order: 50,
                 mailto: ''
             },
             tel: {
                 isUsed: false,
+                order: 60,
                 tel: ''
             }
         }, opts);
 
-        var social = '';
+        var social = [];
+        var icon = '';
 
         /**
          * Add the facebook share link
@@ -88,13 +96,20 @@
             var fblink = 'http://facebook.com/sharer/sharer.php';
             fblink += '?u=' + encodeURIComponent(opts.url);
 
-            social += '<a href="'+fblink+'" class="facebook" target="_blank" rel="external nofollow">';
+            icon = '';
+
+            icon += '<a href="'+fblink+'" class="facebook" target="_blank" rel="external nofollow">';
             if(typeof opts.facebook.svg === 'string' && opts.facebook.svg !== ''){
-                social += opts.facebook.svg;
+                icon += opts.facebook.svg;
             } else {
-                social += fbsvg;
+                icon += fbsvg;
             }
-            social += '</a>';
+            icon += '</a>';
+
+            social.push({
+                icon: icon,
+                order: opts.facebook.order
+            });
         }
 
         /**
@@ -106,13 +121,20 @@
             twlink += '?text=' + encodeURIComponent(opts.text);
             twlink += '&url=' + encodeURIComponent(opts.url);
 
-            social += '<a href="'+twlink+'" class="twitter" target="_blank" rel="external nofollow">';
+            icon = '';
+
+            icon += '<a href="'+twlink+'" class="twitter" target="_blank" rel="external nofollow">';
             if(typeof opts.twitter.svg === 'string' && opts.twitter.svg !== ''){
-                social += opts.twitter.svg;
+                icon += opts.twitter.svg;
             } else {
-                social += twsvg;
+                icon += twsvg;
             }
-            social += '</a>';
+            icon += '</a>';
+
+            social.push({
+                icon: icon,
+                order: opts.twitter.order
+            });
         }
 
         /**
@@ -125,13 +147,20 @@
             lilink += '&url=' + encodeURIComponent(opts.url);
             lilink += '&title=' + encodeURIComponent(opts.title);
 
-            social += '<a href="'+lilink+'" class="linkedin" target="_blank" rel="external nofollow">';
+            icon = '';
+
+            icon += '<a href="'+lilink+'" class="linkedin" target="_blank" rel="external nofollow">';
             if(typeof opts.linkedin.svg === 'string' && opts.linkedin.svg !== ''){
-                social += opts.linkedin.svg;
+                icon += opts.linkedin.svg;
             } else {
-                social += lisvg;
+                icon += lisvg;
             }
-            social += '</a>';
+            icon += '</a>';
+
+            social.push({
+                icon: icon,
+                order: opts.linkedin.order
+            });
         }
 
         /**
@@ -142,13 +171,20 @@
             var gplink = 'http://plus.google.com/share';
             gplink += '?url=' + encodeURIComponent(opts.url);
 
-            social += '<a href="'+gplink+'" class="gplus" target="_blank" rel="external nofollow">';
+            icon = '';
+
+            icon += '<a href="'+gplink+'" class="gplus" target="_blank" rel="external nofollow">';
             if(typeof opts.gplus.svg === 'string' && opts.gplus.svg !== ''){
-                social += opts.gplus.svg;
+                icon += opts.gplus.svg;
             } else {
-                social += gpsvg;
+                icon += gpsvg;
             }
-            social += '</a>';
+            icon += '</a>';
+
+            social.push({
+                icon: icon,
+                order: opts.gplus.order
+            });
         }
 
         /**
@@ -157,13 +193,20 @@
         if(opts.print.isUsed){
             var printsvg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" width="475.1" height="475.1" viewBox="0 0 475.1 475.1" xml:space="preserve" fill="rgb(0, 0, 0)"><style>.s0{fill:rgb(0, 0, 0);}</style><path d="M459 217.1c-10.8-10.8-23.7-16.1-38.7-16.1h-18.3v-73.1c0-7.6-1.9-16-5.7-25.1 -3.8-9.1-8.4-16.4-13.7-21.7L339.2 37.7c-5.3-5.3-12.6-9.9-21.7-13.7 -9.1-3.8-17.5-5.7-25.1-5.7H100.5c-7.6 0-14.1 2.7-19.4 8 -5.3 5.3-8 11.8-8 19.4V201H54.8c-15 0-27.9 5.4-38.7 16.1C5.4 227.9 0 240.8 0 255.8v118.8c0 2.5 0.9 4.6 2.7 6.4 1.8 1.8 4 2.7 6.4 2.7h64v45.7c0 7.6 2.7 14.1 8 19.4 5.3 5.3 11.8 8 19.4 8h274.1c7.6 0 14.1-2.7 19.4-8 5.3-5.3 8-11.8 8-19.4v-45.7h64c2.5 0 4.6-0.9 6.4-2.7 1.8-1.8 2.7-3.9 2.7-6.4V255.8C475.1 240.8 469.7 227.9 459 217.1zM365.4 420.3H109.6v-73.1h255.8V420.3zM365.4 237.5H109.6V54.8h182.7v45.7c0 7.6 2.7 14.1 8 19.4 5.3 5.3 11.8 8 19.4 8h45.7V237.5zM433.1 268.7c-3.6 3.6-7.9 5.4-12.8 5.4 -4.9 0-9.2-1.8-12.8-5.4 -3.6-3.6-5.4-7.9-5.4-12.8s1.8-9.2 5.4-12.8c3.6-3.6 7.9-5.4 12.8-5.4 4.9 0 9.2 1.8 12.8 5.4 3.6 3.6 5.4 7.9 5.4 12.8S436.7 265 433.1 268.7z" fill="rgb(0, 0, 0)"></path></svg>';
 
-            social += '<a href="#" class="print" target="_blank">';
+            icon = '';
+
+            icon += '<a href="#" class="print" target="_blank">';
             if(typeof opts.print.svg === 'string' && opts.print.svg !== ''){
-                social += opts.print.svg;
+                icon += opts.print.svg;
             } else {
-                social += printsvg;
+                icon += printsvg;
             }
-            social += '</a>';
+            icon += '</a>';
+
+            social.push({
+                icon: icon,
+                order: opts.print.order
+            });
         }
 
         /**
@@ -173,13 +216,20 @@
             var emailsvg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" width="511.6" height="511.6" viewBox="0 0 511.6 511.6" xml:space="preserve" fill="rgb(0, 0, 0)"><style>.s0{fill:rgb(0, 0, 0);}</style><path d="M49.1 178.7c6.5 4.6 26 18.1 58.5 40.7 32.5 22.6 57.5 39.9 74.8 52.1 1.9 1.3 5.9 4.2 12.1 8.7 6.2 4.5 11.3 8.1 15.4 10.9 4.1 2.8 9 5.9 14.8 9.3 5.8 3.4 11.3 6 16.4 7.7 5.1 1.7 9.9 2.6 14.3 2.6h0.3 0.3c4.4 0 9.1-0.9 14.3-2.6 5.1-1.7 10.6-4.3 16.4-7.7 5.8-3.4 10.8-6.5 14.8-9.3 4.1-2.8 9.2-6.4 15.4-10.9 6.2-4.5 10.2-7.4 12.1-8.7 17.5-12.2 62.1-43.1 133.6-92.8 13.9-9.7 25.5-21.4 34.8-35.1 9.3-13.7 14-28.1 14-43.1 0-12.6-4.5-23.3-13.6-32.3 -9-8.9-19.7-13.4-32.1-13.4H45.7c-14.7 0-25.9 4.9-33.8 14.8C3.9 79.6 0 91.9 0 106.8c0 12 5.2 25 15.7 39C26.2 159.7 37.3 170.7 49.1 178.7zM483.1 209.3c-62.4 42.3-109.8 75.1-142.2 98.5 -10.8 8-19.6 14.2-26.4 18.7 -6.8 4.5-15.7 9-27 13.7 -11.2 4.7-21.7 7-31.4 7h-0.3 -0.3c-9.7 0-20.2-2.3-31.4-7 -11.2-4.7-20.2-9.2-27-13.7 -6.8-4.5-15.6-10.7-26.4-18.7 -25.7-18.8-73-51.7-141.9-98.5C18 202 8.4 193.8 0 184.4v226.7c0 12.6 4.5 23.3 13.4 32.3 8.9 8.9 19.7 13.4 32.3 13.4h420.3c12.6 0 23.3-4.5 32.3-13.4 8.9-8.9 13.4-19.7 13.4-32.3V184.4C503.4 193.6 493.9 201.9 483.1 209.3z" fill="rgb(0, 0, 0)"></path></svg>';
             var emaillink = 'mailto:' + opts.email.mailto;
 
-            social += '<a href="'+emaillink+'" class="email" target="_blank">';
+            icon = '';
+
+            icon += '<a href="'+emaillink+'" class="email" target="_blank">';
             if(typeof opts.email.svg === 'string' && opts.email.svg !== ''){
-                social += opts.email.svg;
+                icon += opts.email.svg;
             } else {
-                social += emailsvg;
+                icon += emailsvg;
             }
-            social += '</a>';
+            icon += '</a>';
+
+            social.push({
+                icon: icon,
+                order: opts.email.order
+            });
         }
 
         /**
@@ -189,19 +239,40 @@
             var telsvg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" width="438.5" height="438.5" viewBox="0 0 438.5 438.5" xml:space="preserve" fill="rgb(0, 0, 0)"><style>.s0{fill:rgb(0, 0, 0);}</style><path d="M414.4 24.1C398.3 8 379 0 356.3 0H82.2C59.6 0 40.2 8 24.1 24.1 8 40.2 0 59.6 0 82.2v274.1c0 22.6 8 42 24.1 58.1 16.1 16.1 35.5 24.1 58.1 24.1h274.1c22.6 0 42-8 58.1-24.1 16.1-16.1 24.1-35.5 24.1-58.1V82.2C438.5 59.6 430.5 40.2 414.4 24.1zM359.2 332.9c-4 8.8-13 16.4-27 22.8 -14 6.5-26.4 9.7-37.3 9.7 -3 0-6.3-0.2-9.7-0.7 -3.4-0.5-6.3-1-8.7-1.4 -2.4-0.5-5.5-1.3-9.4-2.6 -3.9-1.2-6.7-2.2-8.4-2.9 -1.7-0.7-4.9-1.9-9.4-3.6 -4.6-1.7-7.4-2.8-8.6-3.1 -31.2-11.4-61.7-32-91.5-61.8 -29.8-29.8-50.4-60.3-61.8-91.5 -0.4-1.1-1.4-4-3.1-8.6 -1.7-4.6-2.9-7.7-3.6-9.4 -0.7-1.7-1.6-4.5-2.9-8.4 -1.2-3.9-2.1-7-2.6-9.4 -0.5-2.4-0.9-5.3-1.4-8.7 -0.5-3.4-0.7-6.7-0.7-9.7 0-10.8 3.2-23.3 9.7-37.3 6.5-14 14.1-23 22.8-27 10.1-4.2 19.7-6.3 28.8-6.3 2.1 0 3.6 0.2 4.6 0.6 1 0.4 2.5 2.1 4.7 5.1 2.2 3 4.6 6.9 7.1 11.6 2.6 4.7 5.1 9.2 7.6 13.6 2.5 4.4 4.9 8.7 7.1 13 2.3 4.3 3.7 7 4.3 8.1 0.6 1 1.8 2.8 3.7 5.4 1.9 2.7 3.3 5 4.3 7.1 1 2.1 1.4 4.1 1.4 6 0 2.9-2 6.3-5.9 10.4 -3.9 4.1-8.2 7.9-12.8 11.3s-8.9 7.1-12.8 11c-3.9 3.9-5.9 7.1-5.9 9.6 0 1.3 0.3 2.9 1 4.7 0.7 1.8 1.3 3.3 1.9 4.4 0.6 1.1 1.5 2.8 2.7 4.9 1.2 2.1 2 3.4 2.4 4 10.5 18.8 22.5 35.1 36.1 48.7 13.6 13.6 29.8 25.6 48.7 36.1 0.6 0.4 1.9 1.2 4 2.4 2.1 1.2 3.7 2.1 4.9 2.7 1.1 0.6 2.6 1.2 4.4 1.9 1.8 0.7 3.4 1 4.7 1 3 0 7.2-3.1 12.6-9.4 5.3-6.3 10.8-12.5 16.3-18.7 5.5-6.2 10-9.3 13.4-9.3 1.9 0 3.9 0.5 6 1.4 2.1 1 4.5 2.4 7.1 4.3 2.7 1.9 4.5 3.1 5.4 3.7l15.1 8.3c10.1 5.3 18.5 10 25.3 14.1s10.4 6.9 11 8.4c0.4 1 0.6 2.5 0.6 4.6C365.4 313.2 363.4 322.8 359.2 332.9z" fill="rgb(0, 0, 0)"></path></svg>';
             var tellink = 'tel:' + opts.tel.tel;
 
-            social += '<a href="'+tellink+'" class="tel" target="_blank">';
+            icon = '';
+
+            icon += '<a href="'+tellink+'" class="tel" target="_blank">';
             if(typeof opts.tel.svg === 'string' && opts.tel.svg !== ''){
-                social += opts.tel.svg;
+                icon += opts.tel.svg;
             } else {
-                social += telsvg;
+                icon += telsvg;
             }
-            social += '</a>';
+            icon += '</a>';
+
+            social.push({
+                icon: icon,
+                order: opts.tel.order
+            });
         }
 
         /**
-         * Append the social icons to the wrapper given
+         * Append the social icons to the wrapper given after sorting them
          */
-        soc.append(social);
+        social.sort(function(a, b){
+            if(a.order < b.order){
+                return -1;
+            }
+
+            if(a.order > b.order){
+                return 1;
+            }
+
+            return 0;
+        });
+
+        for(var i = 0, len = social.length; i < len; i++){
+            soc.append(social[i].icon);
+        }
 
         /**
          * Bind the click event to open a popup window
