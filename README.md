@@ -1,3 +1,5 @@
+***THIS PACKAGE IS NOW ABANDONED, PLEASE USE https://github.com/zeraphie/socialLinks INSTEAD***
+
 # socialLinkBuilder
 A jQuery Plugin that builds the social links for you
 
